@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "webpack:client": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.dev.js --watch",
-    "webpack:server": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.server.js --watch",
-    "webpack:start": "nodemon --watch dist --exec node dist/server.js",
-    "develop": "npm-run-all --parallel webpack:*",
+    "dev": "npm-run-all --parallel dev:*",
+    "dev:buil-client": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.dev.js --watch",
+    "dev:build-server": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.server.js --watch",
+    "dev:server": "nodemon --watch dist --exec node dist/server.js",
     "build": "npm-run-all clean build:*",
     "build:server": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.server.js",
     "build:client": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.js"
@@ -59,6 +59,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "identity-obj-proxy": "^3.0.0",
+    "ignore-styles": "^5.0.1",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "npm-run-all": "^4.1.5",

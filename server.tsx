@@ -3,32 +3,32 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
-import path from "path";
 
-import ReactDOMServer from "react-dom/server";
+import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router";
-import AppTest from './src/app.test';
+import Routes from './src/routes';
 
 const port = process.env.PORT || 3001;
 const app = express();
 // const router = express.Router();
-
 
 app.use(cors());
 app.use(bodyParser.json()); // for parsing application/json
 app.use(morgan('dev'));
 
 app.use(
-  express.static(path.resolve(__dirname, './dist/public'))
+  express.static('dist/public')
 );
 
 app.get('/*', (req, res) => {
   const context = {};
-  const content = ReactDOMServer.renderToString(
+  const content = renderToString(
     <StaticRouter location={req.url} context={context}>
-      <AppTest />
+      <Routes />
     </StaticRouter>
   );
+
+  console.error('content', content);
 
   const html = `
     <html lang="en">

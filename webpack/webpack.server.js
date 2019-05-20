@@ -9,7 +9,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    publicPath: '/dist',
+    publicPath: '/',
     path: path.join(__dirname, '../dist')
   },
   resolve: {
@@ -29,9 +29,11 @@ module.exports = {
         // Transpiles ES6-8 into ES5
         test: /\.(js|ts|tsx|jsx)?$/,
         exclude: [/node_modules/],
-        use: {
-          loader: "babel-loader"
-        }
+        use: [
+          {
+            loader: "babel-loader"
+          }
+        ]
       }
     ]
   }

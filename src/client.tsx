@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-
-import AppTest from './app.test';
+import Routes from './routes';
 
 ReactDom.hydrate(
   <BrowserRouter>
-    <AppTest />
+    <Routes />
   </BrowserRouter>,
   document.getElementById('root')
 );

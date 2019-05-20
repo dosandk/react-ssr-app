@@ -5,16 +5,16 @@ import { withTranslation } from 'react-i18next';
 import HomePage from "../pages/home-page";
 import FirstPage from "../pages/first";
 import SecondPage from "../pages/second";
-import PageNotFound from '../pages/page-not-found';
+// import PageNotFound from '../pages/page-not-found';
 
-import styles from './index.scss';
+// import styles from './index.scss';
 
 class Layout extends Component<any> {
   render() {
     const { path } = this.props.match;
 
     return (
-      <main className={styles['layout-container']}>
+      <main>
         <header>
           <menu>
             <ul>
@@ -34,7 +34,7 @@ class Layout extends Component<any> {
           <Route exact={true} path={`${path}`} component={HomePage} />
           <Route path={`${path}first`} component={FirstPage} />
           <Route path={`${path}second`} component={SecondPage} />
-          <Route path={`${path}`} component={PageNotFound} />
+          {/*<Route path={`${path}`} component={PageNotFound} />*/}
         </Switch>
       </main>
     );

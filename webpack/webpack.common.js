@@ -12,7 +12,7 @@ module.exports = {
   entry: [path.join(__dirname, '../src/client.tsx')],
   output: {
     filename: '[name].bundle.js',
-    publicPath: '/',
+    publicPath: '/dist/public/',
     path: path.resolve(__dirname, '../dist/public')
   },
   resolve: {
@@ -52,10 +52,9 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
-    new HtmlWebpackPlugin({
-      template: path.resolve('index.html'),
-      // filename: '/index.html',
-      excludeChunks: [ 'server' ],
-    })
+    // new HtmlWebpackPlugin({
+    //   template: path.resolve('index.html'),
+    //   excludeChunks: [ 'server' ],
+    // })
   ]
 };

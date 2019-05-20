@@ -7,6 +7,8 @@ export class Routes extends Component {
   static root = '/';
 
   render() {
+    console.error('props', this.props);
+
     return (
       <Route path={`${Routes.root}`} component={Layout} />
     );
