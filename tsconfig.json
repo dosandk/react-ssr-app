@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src", // enables relative imports to root
+    "paths": {
+      "redux": ["typings/redux.d.ts"],
+      "react": ["node_modules/@types/react"]
+    },
+    "outDir": "dist/", // target for compiled files
+    "allowSyntheticDefaultImports": true, // no errors on commonjs default import
+    "allowJs": true, // include js files
+    "checkJs": true, // typecheck js files
+    "declaration": false, // don't emit declarations
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true, // importing helper functions from tslib
+    "noEmitHelpers": true, // disable emitting inline helper functions
+    "jsx": "react", // process JSX
+    "lib": ["es5", "es6", "es7", "es2017", "dom"],
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "pretty": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "types":[
+      "jest"
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "i18n-server"
+  ]
+}
