@@ -1,6 +1,3 @@
-// import register from 'ignore-styles';
-// register(['.sass', '.scss']);
-
 import React from 'react';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -41,8 +38,8 @@ app.get('/*', (req, res) => {
 
     return res.send(
       data.replace(
-        '<div id="root"></div>',
-        `<div id="root">${content}</div>`
+        '<div id="root" class="root"></div>',
+        `<div id="root" class="root">${content}</div>`
       )
     );
   })
