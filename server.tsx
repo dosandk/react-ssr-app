@@ -1,8 +1,13 @@
+// import register from 'ignore-styles';
+// register(['.sass', '.scss']);
+
 import React from 'react';
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
 
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router";
@@ -10,7 +15,6 @@ import Routes from './src/routes';
 
 const port = process.env.PORT || 3001;
 const app = express();
-// const router = express.Router();
 
 app.use(cors());
 app.use(bodyParser.json()); // for parsing application/json
@@ -21,29 +25,27 @@ app.use(
 );
 
 app.get('/*', (req, res) => {
-  const context = {};
-  const content = renderToString(
-    <StaticRouter location={req.url} context={context}>
-      <Routes />
-    </StaticRouter>
-  );
+  fs.readFile(path.resolve('./dist/public/index.html'), 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
 
-  console.error('content', content);
+      return res.status(500).send('An error occurred')
+    }
 
-  const html = `
-    <html lang="en">
-      <head></head>
-      <body>
-        <div id="root" class="root">
-          ${content}
-        </div>
-        <script src="main.bundle.js"></script>
-        <script src="vendors~main.bundle.js"></script>
-      </body>
-    </html>
-  `;
+    const context = {};
+    const content = renderToString(
+      <StaticRouter location={req.url} context={context}>
+        <Routes />
+      </StaticRouter>
+    );
 
-  res.send(html);
+    return res.send(
+      data.replace(
+        '<div id="root"></div>',
+        `<div id="root">${content}</div>`
+      )
+    );
+  })
 });
 
 app.listen(port, error => {
