@@ -55,6 +55,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve(__dirname, '../index.html'),
+      filename: '../index.html',
       minify: {
         removeComments: true,
         collapseWhitespace: true,

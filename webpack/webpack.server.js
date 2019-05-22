@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 console.error('process.env.NODE_ENV', process.env.NODE_ENV);
 
@@ -26,6 +27,35 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.scss$/,
+        exclude: [/(node_modules)/],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              // you can specify a publicPath here
+              // by default it use publicPath in webpackOptions.output
+            }
+          },
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+            options: {
+              modules: true,
+              camelCase: false,
+              importLoaders: 2,
+              localIdentName: '[local]___[hash:base64:5]',
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader', // compiles Sass to CSS
+            options: {
+              sourceMap: true
+            }
+          }
+        ],
+      },
+      {
         // Transpiles ES6-8 into ES5
         test: /\.(js|ts|tsx|jsx)?$/,
         exclude: [/node_modules/],
@@ -34,7 +64,16 @@ module.exports = {
             loader: "babel-loader"
           }
         ]
-      }
+      },
+
     ]
-  }
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css'
+    })
+  ]
 };
