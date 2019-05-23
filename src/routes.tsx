@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import {withTranslation} from "react-i18next";
+import {Route} from 'react-router-dom';
 
 import Layout from './layout';
 
@@ -7,12 +8,10 @@ export class Routes extends Component {
   static root = '/';
 
   render() {
-    console.error('props', this.props);
-
     return (
       <Route path={`${Routes.root}`} component={Layout} />
     );
   }
 }
 
-export default Routes;
+export default withTranslation()(Routes);

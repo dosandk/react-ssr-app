@@ -7,6 +7,8 @@ import i18n from "./i18n";
 import { hot } from 'react-hot-loader/root';
 import { setConfig } from 'react-hot-loader';
 
+import './client.scss';
+
 setConfig({
   ignoreSFC: true, // RHL will be __completely__ disabled for SFC
   pureRender: true // RHL will not change render method

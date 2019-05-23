@@ -10,6 +10,12 @@ import PageNotFound from '../pages/page-not-found';
 import styles from './index.scss';
 
 class Layout extends Component<any> {
+  changeLanguage (language: string) {
+    return () => {
+      this.props.i18n.changeLanguage(language);
+    }
+  }
+
   render() {
     const { path } = this.props.match;
 
@@ -36,6 +42,11 @@ class Layout extends Component<any> {
           <Route path={`${path}second`} component={SecondPage} />
           <Route path={`${path}`} component={PageNotFound} />
         </Switch>
+        <footer>
+          Change language:
+          <button onClick={this.changeLanguage('en')}>EN</button>
+          <button onClick={this.changeLanguage('uk')}>UK</button>
+        </footer>
       </main>
     );
   }

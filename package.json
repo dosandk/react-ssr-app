@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "dev": "npm-run-all --parallel dev:*",
-    "dev:build-client": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.dev.js --watch",
-    "dev:build-server": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.server.js --watch",
+    "develop": "npm-run-all --parallel dev:*",
+    "dev:build-client": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.dev.js -w",
+    "dev:build-server": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.server.js -w",
     "dev:server": "nodemon --watch dist --exec node dist/server.js",
     "build": "npm-run-all clean build:*",
     "build:server": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.server.js",
@@ -21,6 +21,7 @@
   "license": "ISC",
   "homepage": "",
   "dependencies": {
+    "@types/react-helmet": "^5.0.8",
     "body-parser": "^1.19.0",
     "core-js": "^2.6.5",
     "cors": "^2.8.5",
@@ -31,6 +32,7 @@
     "nodemon": "^1.19.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
+    "react-helmet": "^5.2.1",
     "react-i18next": "^10.6.0",
     "react-loader-spinner": "^2.3.0",
     "react-preloaders": "^2.1.4",

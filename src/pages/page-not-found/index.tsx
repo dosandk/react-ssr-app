@@ -6,19 +6,27 @@ import P from '../../components/paragraph';
 import H from '../../components/heading';
 
 import styles from './index.scss';
+import {Helmet} from "react-helmet";
 
 const PageNotFound = ({ t }: any) => {
   return (
     <div className={styles['page-not-found']}>
-      <H level="one">Sorry!</H>
+      <Helmet>
+        <title>{t('Page Not Found')}</title>
+        <meta
+          name="description"
+          content={t('Page Not Found description')}
+        />
+      </Helmet>
+      <H level="one">{t('Page Not Found')}</H>
       <P className="body text-center">
-        The page you are looking for was moved, deleted, renamed or might never existed.
+        {t('The page you are looking for was moved, deleted, renamed or might never existed.')}
       </P>
       <NavLink to="/">
-        <button>{t('HOME PAGE')}</button>
+        <button>{t('homePage|Home Page')}</button>
       </NavLink>
     </div>
   );
 };
 
-export default withTranslation()(PageNotFound);
+export default withTranslation(['notFoundPage', 'homePage'])(PageNotFound);
