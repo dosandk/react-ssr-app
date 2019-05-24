@@ -1,12 +1,14 @@
 import React from 'react';
+import {Helmet} from "react-helmet";
 import { NavLink } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 
 import P from '../../components/paragraph';
 import H from '../../components/heading';
 
+import Icon from '../../assets/images/icon-card-2.svg';
+
 import styles from './index.scss';
-import {Helmet} from "react-helmet";
 
 const PageNotFound = ({ t }: any) => {
   return (
@@ -25,6 +27,9 @@ const PageNotFound = ({ t }: any) => {
       <NavLink to="/">
         <button>{t('homePage|Home Page')}</button>
       </NavLink>
+      <div>
+        <img src={Icon} alt="icon" />
+      </div>
     </div>
   );
 };

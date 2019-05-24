@@ -36,17 +36,17 @@ class Layout extends Component<any> {
             </ul>
           </menu>
         </header>
+        <div>
+          <div>Change language:</div>
+          <button onClick={this.changeLanguage('en')}>EN</button>
+          <button onClick={this.changeLanguage('uk')}>UK</button>
+        </div>
         <Switch>
           <Route exact={true} path={`${path}`} component={HomePage} />
           <Route path={`${path}first`} component={FirstPage} />
           <Route path={`${path}second`} component={SecondPage} />
           <Route path={`${path}`} component={PageNotFound} />
         </Switch>
-        <footer>
-          Change language:
-          <button onClick={this.changeLanguage('en')}>EN</button>
-          <button onClick={this.changeLanguage('uk')}>UK</button>
-        </footer>
       </main>
     );
   }

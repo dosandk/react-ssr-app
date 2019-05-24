@@ -1,8 +1,10 @@
 import React from 'react';
-
-import styles from './index.scss';
 import {Helmet} from "react-helmet";
 import {withTranslation} from "react-i18next";
+
+import Icon from '../../assets/images/icon-card-3.svg';
+
+import styles from './index.scss';
 
 const SecondPage = ({ t }: any) => {
   return (
@@ -15,6 +17,9 @@ const SecondPage = ({ t }: any) => {
         />
       </Helmet>
       <h1>{t('Second Page')}</h1>
+      <div>
+        <img src={Icon} alt="icon" />
+      </div>
     </div>
   );
 };

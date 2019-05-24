@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Routes from './routes';
 import {I18nextProvider} from "react-i18next";
 import i18n from "./i18n";
-import { hot } from 'react-hot-loader/root';
+// import { hot } from 'react-hot-loader/root';
 import { setConfig } from 'react-hot-loader';
 
 import './client.scss';
@@ -24,10 +24,10 @@ const App = () => {
   );
 };
 
-const HotApp = hot(App);
+// const HotApp = hot(App);
 
 ReactDom.hydrate(
-  <HotApp/>,
+  <App/>,
   document.getElementById('root')
 );
 

@@ -27,33 +27,25 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(png|jp(e*)g|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10 * 1024, // any image below or equal to 10K will be converted to inline base64 instead
+              outputPath: 'images'
+            }
+          }
+        ]
+      },
+      {
         test: /\.(scss|css)$/,
         exclude: [/(node_modules)/],
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              // you can specify a publicPath here
-              // by default it use publicPath in webpackOptions.output
-            }
-          },
-          {
-            loader: 'css-loader', // translates CSS into CommonJS
-            options: {
-              modules: true,
-              camelCase: false,
-              importLoaders: 2,
-              localIdentName: '[local]___[hash:base64:5]',
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'sass-loader', // compiles Sass to CSS
-            options: {
-              sourceMap: true
-            }
+            loader: 'ignore-loader'
           }
-        ],
+        ]
       },
       {
         // Transpiles ES6-8 into ES5
@@ -69,11 +61,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: '[name].css',
-      chunkFilename: '[id].css'
-    })
+    // new MiniCssExtractPlugin({
+    //   // Options similar to the same options in webpackOptions.output
+    //   // both options are optional
+    //   filename: '[name].css',
+    //   chunkFilename: '[id].css'
+    // })
   ]
 };

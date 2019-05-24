@@ -9,5 +9,20 @@
     "@babel/proposal-object-rest-spread",
     "react-docgen",
     "react-hot-loader/babel"
-  ]
+  ],
+  "env": {
+    "server": {
+      "plugins": [
+        [
+          "css-modules-transform",
+          {
+            "preprocessCss": "./webpack/loaders/sass-loader.js",
+            "generateScopedName": "[local]___[hash:base64:5]",
+            "extensions": [".css", ".scss"]
+          }
+        ]
+      ]
+    }
+  }
 }
+

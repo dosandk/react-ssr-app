@@ -53,9 +53,6 @@ app.get('/*', (req, res) => {
     const titleRegExp = /<title[^>]*>(.*?)<\/title>/;
     const headRegExp = /<\/head>/;
 
-    console.error('helmet', helmet);
-    console.error('meta', meta);
-
     const result = data
       .replace(
         rootRegExp,

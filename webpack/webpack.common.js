@@ -1,5 +1,4 @@
-// require('dotenv/config');
-
+require("@babel/polyfill");
 const webpack = require('webpack');
 const path = require('path');
 const jsLoaders = require('./loaders/js-loaders');
@@ -9,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   target: 'web',
-  entry: [path.join(__dirname, '../src/client.tsx')],
+  entry: ["@babel/polyfill", path.join(__dirname, '../src/client.tsx')],
   output: {
     filename: '[name].bundle.js',
     publicPath: '/',
