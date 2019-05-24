@@ -1,8 +1,5 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-console.error('process.env.NODE_ENV', process.env.NODE_ENV);
 
 module.exports = {
   entry: {
@@ -32,7 +29,7 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 10 * 1024, // any image below or equal to 10K will be converted to inline base64 instead
+              limit: 1 * 1024, // any image below or equal to 1K will be converted to inline base64 instead
               outputPath: 'images'
             }
           }
@@ -57,15 +54,6 @@ module.exports = {
           }
         ]
       },
-
     ]
-  },
-  plugins: [
-    // new MiniCssExtractPlugin({
-    //   // Options similar to the same options in webpackOptions.output
-    //   // both options are optional
-    //   filename: '[name].css',
-    //   chunkFilename: '[id].css'
-    // })
-  ]
+  }
 };
