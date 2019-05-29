@@ -20,13 +20,10 @@ app.use(cors());
 app.use(bodyParser.json()); // for parsing application/json
 app.use(morgan('dev'));
 
-app.use(
-  express.static(path.resolve(__dirname, 'public'))
-);
-
-// TODO:
-// * add i18next server
-// * check context
+// NOTE: Static files will be server by Nginx
+// app.use(
+//   express.static(path.resolve(__dirname, 'public'))
+// );
 
 app.get('/*', (req, res) => {
   fs.readFile(path.resolve(__dirname, 'index.html'), 'utf8', (err, data) => {
