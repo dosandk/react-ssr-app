@@ -1,10 +1,12 @@
 require("@babel/polyfill");
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+
 const jsLoaders = require('./loaders/js-loaders');
 const fileLoaders = require('./loaders/file-loaders');
 const cssLoaders = require('./loaders/css-loaders');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   target: 'web',
@@ -31,7 +33,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jp(e*)g|svg)$/,
+        test: /\.(png|jp(e*)g|svg|gif)$/,
         use: fileLoaders
       },
       {
@@ -52,6 +54,7 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.SSR': JSON.stringify(typeof process.env.SSR === 'undefined' || false)
     }),
+    new CopyPlugin(['robots.txt', 'sitemap.xml']),
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve(__dirname, '../index.html'),
