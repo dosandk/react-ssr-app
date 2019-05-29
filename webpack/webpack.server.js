@@ -20,7 +20,10 @@ module.exports = {
     __dirname: false,   // if you don't put this is, __dirname
     __filename: false,  // and __filename return blank or /
   },
-  externals: [nodeExternals()], // Need this to avoid error when working with Express
+  externals: [nodeExternals({
+    // this WILL include `jquery` and `webpack/hot/dev-server` in the bundle, as well as `lodash/*`
+    // whitelist: []
+  })], // Need this to avoid error when working with Express
   module: {
     rules: [
       {
@@ -29,8 +32,8 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 1 * 1024, // any image below or equal to 1K will be converted to inline base64 instead
-              outputPath: 'images'
+              limit: 10 * 1024, // any image below or equal to 10K will be converted to inline base64 instead
+              emitFile: false
             }
           }
         ]

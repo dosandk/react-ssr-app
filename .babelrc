@@ -16,7 +16,7 @@
         [
           "css-modules-transform",
           {
-            "preprocessCss": "./webpack/loaders/sass-loader.js",
+            "preprocessCss": "./webpack/loaders/css-modules-transform-loader.js",
             "generateScopedName": "[local]___[hash:base64:5]",
             "extensions": [".css", ".scss"]
           }

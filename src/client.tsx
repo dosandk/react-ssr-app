@@ -26,8 +26,9 @@ const App = () => {
 
 // const HotApp = hot(App);
 
-ReactDom.hydrate(
+const renderMethod = process.env.SSR ? 'hydrate' : 'render';
+
+ReactDom[renderMethod](
   <App/>,
   document.getElementById('root')
 );
-

@@ -49,7 +49,8 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.SSR': JSON.stringify(typeof process.env.SSR === 'undefined' || false)
     }),
     new HtmlWebpackPlugin({
       inject: true,
@@ -65,8 +66,8 @@ module.exports = {
         keepClosingSlash: true,
         minifyJS: true,
         minifyCSS: true,
-        minifyURLs: true,
-      },
+        minifyURLs: true
+      }
     })
   ]
 };

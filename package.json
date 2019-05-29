@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "develop": "npm-run-all --parallel dev:*",
+    "develop": "cross-env NODE_ENV=development SSR=false webpack-dev-server --config ./webpack/webpack.dev.js",
+    "develop:ssr": "npm-run-all --parallel dev:*",
     "dev:build-client": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.dev.js -w",
     "dev:build-server": "cross-env NODE_ENV=development BABEL_ENV=server webpack --config ./webpack/webpack.server.js -w",
-    "dev:server": "nodemon --watch dist --exec node dist/server.js",
+    "start:server": "nodemon --watch dist --exec node dist/server.js",
     "build": "npm-run-all clean build:*",
     "build:server": "cross-env NODE_ENV=production BABEL_ENV=server webpack --config ./webpack/webpack.server.js",
     "build:client": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.js"
