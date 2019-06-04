@@ -8,11 +8,12 @@
     "start:prod": "node dist/server.js",
     "build:dev": "npm-run-all --parallel build:dev:*",
     "build:dev:server": "cross-env NODE_ENV=development BABEL_ENV=server webpack --config ./webpack/webpack.server.js -w",
-    "build:dev:client": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.prod.js -w",
+    "build:dev:client": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.dev.js -w",
     "build:prod": "npm-run-all clean build:prod:*",
     "build:prod:server": "cross-env NODE_ENV=production BABEL_ENV=server webpack --config ./webpack/webpack.server.js",
     "build:prod:client": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.js",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "start:none-ssr:dev": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/webpack.dev.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,9 @@
     "express": "^4.17.0",
     "i18next": "^15.0.7",
     "i18next-browser-languagedetector": "^3.0.1",
+    "i18next-express-middleware": "^1.8.0",
+    "i18next-node-fs-backend": "^2.1.3",
+    "isomorphic-fetch": "^2.2.1",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.0",
     "react": "^16.8.3",
@@ -61,6 +65,7 @@
     "file-loader": "^3.0.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "i18next-fetch-backend": "^2.2.0",
     "identity-obj-proxy": "^3.0.0",
     "ignore-loader": "^0.1.2",
     "mini-css-extract-plugin": "^0.5.0",
@@ -83,6 +88,8 @@
     "webpack-dev-server": "^3.2.1",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.1",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "webpack-pwa-manifest": "^4.0.0",
+    "workbox-webpack-plugin": "^4.3.1"
   }
 }

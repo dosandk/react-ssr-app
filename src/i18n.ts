@@ -1,9 +1,9 @@
+import isomorphicFetch from 'isomorphic-fetch';
+
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LngDetector from 'i18next-browser-languagedetector';
-
-import en from './assets/locales/en/translation.ts';
-import uk from './assets/locales/uk/translation.ts';
+import Fetch from 'i18next-fetch-backend';
 
 const detectionOptions = {
   order: ['path', 'localStorage'],
@@ -21,28 +21,40 @@ const detectionOptions = {
   // optional htmlTag with lang attribute, the default is:
   // htmlTag: document.documentElement
 };
+const options = {
+  // preload: ['en'],
+  fallbackLng: 'en', // use en if detected lng is not available
+  detection: detectionOptions,
+  keySeparator: false, // we do not use keys in form messages.welcome
+  nsSeparator: '|',
 
-i18n
-  .use(LngDetector)
-  .use(initReactI18next) // passes i18n down to react-i18next
-  .init({
-    resources: {
-      en, uk
-    },
-    fallbackLng: 'en', // use en if detected lng is not available
-    detection: detectionOptions,
-    keySeparator: false, // we do not use keys in form messages.welcome
-    nsSeparator: '|',
+  debug: true,
+  interpolation: {
+    escapeValue: false // react already safes from xss
+  },
+  backend: {
+    loadPath: 'locales/{{lng}}/translation.json',
+    fetch: isomorphicFetch
+  },
+  react: {
+    bindI18n: 'languageChanged',
+    transEmptyNodeValue: '',
+    useSuspense: false
+  },
+  wait: process && !process.release,
+};
 
-    debug: true,
-    interpolation: {
-      escapeValue: false // react already safes from xss
-    },
-    react: {
-      bindI18n: 'languageChanged',
-      transEmptyNodeValue: '',
-      useSuspense: false
-    }
-  });
+// for browser use fetch backend to load translations and browser lng detector
+if (process && !process.release) {
+  i18n
+    .use(Fetch)
+    .use(LngDetector)
+    .use(initReactI18next); // passes i18n down to react-i18next
+  // .init();
+}
+
+if (!i18n.isInitialized) {
+  i18n.init(options);
+}
 
 export default i18n;

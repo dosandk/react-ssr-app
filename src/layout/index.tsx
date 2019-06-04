@@ -21,9 +21,9 @@ class Layout extends Component<any> {
 
     return (
       <main className={styles['layout-container']}>
-        <header>
+        <header className={styles['layout-header']}>
           <menu>
-            <ul>
+            <ul className={styles['navigation']}>
               <li>
                 <NavLink to={'/'}>Home</NavLink>
               </li>
@@ -35,21 +35,21 @@ class Layout extends Component<any> {
               </li>
             </ul>
           </menu>
+          <div>
+            <div>Change language:</div>
+            <button className={styles['button']} onClick={this.changeLanguage('en')}>EN</button>
+            <button className={styles['button']} onClick={this.changeLanguage('uk')}>UK</button>
+          </div>
         </header>
-        <div>
-          <div>Change language:</div>
-          <button onClick={this.changeLanguage('en')}>EN</button>
-          <button onClick={this.changeLanguage('uk')}>UK</button>
+        <div className={styles['layout-body']}>
+          <Switch>
+            <Route exact={true} path={`${path}`} component={HomePage} />
+            <Route exact={true} path={`${path}:lng(en|uk)?`} component={HomePage} />
+            <Route path={`${path}:lng(en|uk)?/first`} component={FirstPage} />
+            <Route path={`${path}:lng(en|uk)?/second`} component={SecondPage} />
+            <Route path={`${path}`} component={PageNotFound} />
+          </Switch>
         </div>
-        <Switch>
-          <Route exact={true} path={`${path}`} component={HomePage} />
-          <Route exact={true} path={`${path}:lng?`} component={HomePage} />
-          <Route path={`${path}first`} component={FirstPage} />
-          <Route path={`${path}:lng?/first`} component={FirstPage} />
-          <Route path={`${path}second`} component={SecondPage} />
-          <Route path={`${path}:lng?/second`} component={SecondPage} />
-          <Route path={`${path}:lng?/`} component={PageNotFound} />
-        </Switch>
       </main>
     );
   }

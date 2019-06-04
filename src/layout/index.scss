@@ -3,4 +3,29 @@
   position: relative;
   flex-direction: column;
   height: 100vh;
+  width: 80vw;
+  margin: 0 auto;
 }
+
+.layout-header {
+  height: 20vh;
+}
+
+.layout-body {
+  height: 80vh;
+  display: flex;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.button {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+

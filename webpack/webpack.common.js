@@ -3,17 +3,18 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 const jsLoaders = require('./loaders/js-loaders');
 const fileLoaders = require('./loaders/file-loaders');
 const cssLoaders = require('./loaders/css-loaders');
 
+const favicon = path.resolve(__dirname, '../src/assets/react-icon.png');
+
 module.exports = {
   target: 'web',
-  entry: {
-    polyfill: "@babel/polyfill",
-    client: path.join(__dirname, '../src/client.tsx')
-  },
+  entry: ["@babel/polyfill", path.join(__dirname, '../src/client.tsx')],
   output: {
     filename: '[name].bundle.js',
     publicPath: '/',
@@ -43,7 +44,7 @@ module.exports = {
         test: /\.(js|jsx|tsx|ts)?$/,
         enforce: 'pre',
         use: jsLoaders,
-        exclude: [/(node_modules)/, /(i18n-server)/]
+        exclude: [/(node_modules)/]
       },
       {
         test: /\.scss$/,
@@ -57,7 +58,11 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.SSR': JSON.stringify(typeof process.env.SSR === 'undefined' || false)
     }),
-    new CopyPlugin(['robots.txt', 'sitemap.xml']),
+    new CopyPlugin([
+      'robots.txt',
+      'sitemap.xml',
+      { from: 'src/assets/locales', to: 'locales'},
+    ]),
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve(__dirname, '../index.html'),
@@ -74,6 +79,36 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true
       }
+    }),
+    new GenerateSW({
+      runtimeCaching: [
+        {
+          urlPattern: /images/,
+          handler: 'cacheFirst'
+        },
+        {
+          urlPattern: new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
+          handler: 'cacheFirst'
+        },
+        {
+          urlPattern: /.*/,
+          handler: 'networkFirst'
+        }
+      ]
+    }),
+    new WebpackPwaManifest({
+      name: 'React SSR App',
+      short_name: 'ssr app',
+      description: 'This is boilerplate for React SSR + i18-next',
+      background_color: '#3c0278',
+      crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
+      theme_color: '#78006c',
+      icons: [
+        {
+          src: favicon,
+          sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
+        }
+      ]
     })
   ]
 };

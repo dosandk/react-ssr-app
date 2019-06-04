@@ -1,3 +1,6 @@
+// import fetch from 'isomorphic-fetch';
+// import Fetch from 'i18next-fetch-backend';
+
 import React from 'react';
 import { renderToString } from "react-dom/server";
 import {Helmet} from "react-helmet";
@@ -12,6 +15,9 @@ import { StaticRouter } from "react-router";
 
 import Routes from './src/routes';
 import i18n from './src/i18n';
+import isomorphicFetch from 'isomorphic-fetch';
+import Backend from 'i18next-node-fs-backend';
+const i18nextMiddleware = require('i18next-express-middleware');
 
 const port = process.env.PORT || 3001;
 const app = express();
@@ -25,66 +31,89 @@ app.use(morgan('dev'));
   Uncomment this block if you want to serve static files via express
 */
 
-app.use(
-  express.static(path.resolve(__dirname, 'public'))
-);
+console.error('Backend', Backend);
 
-app.get('/*', (req, res) => {
-  fs.readFile(path.resolve(__dirname, 'index.html'), 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-
-      return res.status(500).send('An error occurred')
+i18n
+  .use(Backend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init({
+    preload: ['en', 'uk'],
+    ns: ['translation'],
+    defaultNS: 'translation',
+    debug: true,
+    backend: {
+      // loadPath: 'locales/{{lng}}/translation.json',
+      loadPath: path.resolve(__dirname, 'public/locales/{{lng}}/translation.json') ,
+      // fetch: isomorphicFetch
     }
+  }).then(data => {
+    console.error(3333);
 
-    // TODO: change to RegExp
-    const languagesList = ['en', 'uk'];
-    const pathLanguage = req.url.slice(1,3);
+  app.use(
+    express.static(path.resolve(__dirname, 'public'))
+  );
 
-    if (languagesList.includes(pathLanguage)) {
-      i18n.changeLanguage(pathLanguage);
-    }
+  app.get('/*', (req, res) => {
+    fs.readFile(path.resolve(__dirname, 'index.html'), 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
 
-    const context = {};
-    const content = renderToString(
-      <StaticRouter location={req.url} context={context}>
+        return res.status(500).send('An error occurred')
+      }
+
+      // TODO: change to RegExp
+      const languagesList = ['en', 'uk'];
+      const pathLanguage = req.url.slice(1,3);
+
+      // NOTE: it will switch language to language passed in url and return translated document
+      if (languagesList.includes(pathLanguage)) {
+        i18n.changeLanguage(pathLanguage);
+      }
+
+      const context = {};
+      const content = renderToString(
         <I18nextProvider i18n={i18n}>
-          <Routes />
+          <StaticRouter location={req.url} context={context}>
+            <Routes />
+          </StaticRouter>
         </I18nextProvider>
-      </StaticRouter>
-    );
-
-    const helmet = Helmet.renderStatic();
-    const title = helmet.title.toString();
-    const meta = helmet.meta.toString();
-
-    const rootRegExp = /<div id=["|']root["|'][^>]*>(.*?)<\/div>/;
-    const titleRegExp = /<title[^>]*>(.*?)<\/title>/;
-    const headRegExp = /<\/head>/;
-
-    const result = data
-      .replace(
-        rootRegExp,
-        `<div id="root" class="root">${content}</div>`
-      )
-      .replace(
-        titleRegExp,
-        `${title}`
-      )
-      .replace(
-        headRegExp,
-        `${meta}</head>`
       );
 
+      const helmet = Helmet.renderStatic();
+      const title = helmet.title.toString();
+      const meta = helmet.meta.toString();
 
-    return res.send(result);
-  })
+      const rootRegExp = /<div id=["|']root["|'][^>]*>(.*?)<\/div>/;
+      const titleRegExp = /<title[^>]*>(.*?)<\/title>/;
+      const headRegExp = /<\/head>/;
+
+      const result = data
+        .replace(
+          rootRegExp,
+          `<div id="root" class="root">${content}</div>`
+        )
+        .replace(
+          titleRegExp,
+          `${title}`
+        )
+        .replace(
+          headRegExp,
+          `${meta}</head>`
+        );
+
+      return res.send(result);
+    })
+  });
+
+  app.listen(port, error => {
+    if (error) {
+      console.error(`Error: ${error}`);
+    }
+
+    console.log(`Server listening on port ${port}`);
+  });
 });
 
-app.listen(port, error => {
-  if (error) {
-    console.error(`Error: ${error}`);
-  }
 
-  console.log(`Server listening on port ${port}`);
-});
+
+
