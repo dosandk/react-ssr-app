@@ -5,6 +5,9 @@ import { initReactI18next } from 'react-i18next';
 import LngDetector from 'i18next-browser-languagedetector';
 import Fetch from 'i18next-fetch-backend';
 
+import en from './assets/locales/en/translation.json';
+import uk from './assets/locales/uk/translation.json';
+
 const detectionOptions = {
   order: ['path', 'localStorage'],
   lookupFromPathIndex: 0,
@@ -12,49 +15,38 @@ const detectionOptions = {
 
   // cache user language on
   caches: ['localStorage', 'cookie'],
-  excludeCacheFor: ['cimode'], // languages to not persist (cookie, localStorage)
-
-  // optional expire and domain for set cookie
-  cookieMinutes: 10,
-  cookieDomain: 'myDomain',
-
-  // optional htmlTag with lang attribute, the default is:
-  // htmlTag: document.documentElement
 };
+
 const options = {
-  // preload: ['en'],
+  resources: {
+    en, uk
+  },
   fallbackLng: 'en', // use en if detected lng is not available
   detection: detectionOptions,
   keySeparator: false, // we do not use keys in form messages.welcome
   nsSeparator: '|',
 
   debug: true,
+  saveMissing: true,
   interpolation: {
     escapeValue: false // react already safes from xss
   },
   backend: {
     loadPath: 'locales/{{lng}}/translation.json',
+    addPath: 'locales/add/{{lng}}/translation.json',
     fetch: isomorphicFetch
   },
   react: {
     bindI18n: 'languageChanged',
     transEmptyNodeValue: '',
-    useSuspense: false
-  },
-  wait: process && !process.release,
+    useSuspense: false,
+  }
 };
 
-// for browser use fetch backend to load translations and browser lng detector
-if (process && !process.release) {
-  i18n
-    .use(Fetch)
-    .use(LngDetector)
-    .use(initReactI18next); // passes i18n down to react-i18next
-  // .init();
-}
-
-if (!i18n.isInitialized) {
-  i18n.init(options);
-}
+i18n
+  .use(Fetch)
+  .use(LngDetector)
+  .use(initReactI18next) // passes i18n down to react-i18next
+  .init(options);
 
 export default i18n;
