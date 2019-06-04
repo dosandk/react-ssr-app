@@ -4,15 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf dist",
-    "develop": "cross-env NODE_ENV=development SSR=false webpack-dev-server --config ./webpack/webpack.dev.js",
-    "develop:ssr": "npm-run-all --parallel dev:*",
-    "dev:build-client": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.dev.js -w",
-    "dev:build-server": "cross-env NODE_ENV=development BABEL_ENV=server webpack --config ./webpack/webpack.server.js -w",
-    "start:server": "nodemon --watch dist --exec node dist/server.js",
-    "build": "npm-run-all clean build:*",
-    "build:server": "cross-env NODE_ENV=production BABEL_ENV=server webpack --config ./webpack/webpack.server.js",
-    "build:client": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.js"
+    "start:dev": "nodemon --watch dist --exec node dist/server.js",
+    "start:prod": "node dist/server.js",
+
+    "build:dev": "npm-run-all --parallel build:dev:*",
+    "build:dev:server": "cross-env NODE_ENV=production BABEL_ENV=server webpack --config ./webpack/webpack.server.js",
+    "build:dev:client": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.js",
+
+    "build:prod": "npm-run-all clean build:prod:*",
+    "build:prod:server": "cross-env NODE_ENV=production BABEL_ENV=server webpack --config ./webpack/webpack.server.js",
+    "build:prod:client": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.js",
+
+    "clean": "rimraf dist"
   },
   "repository": {
     "type": "git",
@@ -35,8 +38,6 @@
     "react-dom": "^16.8.3",
     "react-helmet": "^5.2.1",
     "react-i18next": "^10.6.0",
-    "react-loader-spinner": "^2.3.0",
-    "react-preloaders": "^2.1.4",
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {

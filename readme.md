@@ -1,3 +1,23 @@
+# Tech stack:
+
+## Libraries:
+* [React](https://reactjs.org/) is a JavaScript library for building user interfaces
+* [React-i18next](https://react.i18next.com/) is a powerful internationalization framework for reactjs / reactnative which is based on i18next.
+* [React-router-dom](https://github.com/ReactTraining/react-router) - React Router id declarative routing for React
+* [React-helmet](https://github.com/nfl/react-helmet) is a document head manager for React
+* [Express](https://expressjs.com/) fast, unopinionated, minimalist web framework for Node.js
+* [SCSS](https://sass-lang.com/) - CSS with superpowers
+
+## Build system
+* [Webpack](https://webpack.js.org/) - module bundler
+
+## Technologies:
+* [TypeScript](https://www.typescriptlang.org/) - is a typed superset of Javascript
+* [CSS Modules](https://github.com/css-modules/css-modules) A CSS Module is a CSS file in which all class names and animation names are scoped locally by default
+* [Nodejs](https://nodejs.org) Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
+* [ServiceWorker](https://w3c.github.io/ServiceWorker/) - is a technology for offline support and other cool stuff
+
+
 ## To start application 
 
 1. install node & npm
@@ -9,8 +29,8 @@
 
 Run next commands in project root: 
  
-* `npm run build`
-* `node dist/server.js`
+* `npm run build:prod`
+* `npm run start:prod`
 
 Application will be started on "localhost:3000"
 
@@ -18,8 +38,8 @@ Application will be started on "localhost:3000"
 
 Run next commands in project root:
 
-* `npm run develop:ssr`
-* `npm run start:server`
+* `npm run build:dev`
+* `npm run start:prod`
 
 Application will be started on "localhost:3000"
 
@@ -27,7 +47,7 @@ Application will be started on "localhost:3000"
 
 ### Build application.
 
-To build an application run `npm run build` as a result you will receive a 
+To build an application run `npm run build:prod` as a result you will receive a 
 next structure in project root:
 
 ```

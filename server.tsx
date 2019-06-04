@@ -20,7 +20,11 @@ app.use(cors());
 app.use(bodyParser.json()); // for parsing application/json
 app.use(morgan('dev'));
 
-// NOTE: Static files will be server by Nginx
+/*
+  NOTE: Static files will be server by Nginx
+  Uncomment this block if you want to serve static files via express
+*/
+
 // app.use(
 //   express.static(path.resolve(__dirname, 'public'))
 // );
