@@ -25,9 +25,9 @@ app.use(morgan('dev'));
   Uncomment this block if you want to serve static files via express
 */
 
-// app.use(
-//   express.static(path.resolve(__dirname, 'public'))
-// );
+app.use(
+  express.static(path.resolve(__dirname, 'public'))
+);
 
 app.get('/*', (req, res) => {
   fs.readFile(path.resolve(__dirname, 'index.html'), 'utf8', (err, data) => {
@@ -35,6 +35,14 @@ app.get('/*', (req, res) => {
       console.error(err);
 
       return res.status(500).send('An error occurred')
+    }
+
+    // TODO: change to RegExp
+    const languagesList = ['en', 'uk'];
+    const pathLanguage = req.url.slice(1,3);
+
+    if (languagesList.includes(pathLanguage)) {
+      i18n.changeLanguage(pathLanguage);
     }
 
     const context = {};

@@ -43,9 +43,12 @@ class Layout extends Component<any> {
         </div>
         <Switch>
           <Route exact={true} path={`${path}`} component={HomePage} />
+          <Route exact={true} path={`${path}:lng?`} component={HomePage} />
           <Route path={`${path}first`} component={FirstPage} />
+          <Route path={`${path}:lng?/first`} component={FirstPage} />
           <Route path={`${path}second`} component={SecondPage} />
-          <Route path={`${path}`} component={PageNotFound} />
+          <Route path={`${path}:lng?/second`} component={SecondPage} />
+          <Route path={`${path}:lng?/`} component={PageNotFound} />
         </Switch>
       </main>
     );

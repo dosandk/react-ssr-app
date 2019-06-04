@@ -10,7 +10,10 @@ const cssLoaders = require('./loaders/css-loaders');
 
 module.exports = {
   target: 'web',
-  entry: ["@babel/polyfill", path.join(__dirname, '../src/client.tsx')],
+  entry: {
+    polyfill: "@babel/polyfill",
+    client: path.join(__dirname, '../src/client.tsx')
+  },
   output: {
     filename: '[name].bundle.js',
     publicPath: '/',

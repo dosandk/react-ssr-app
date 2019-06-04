@@ -6,15 +6,12 @@
   "scripts": {
     "start:dev": "nodemon --watch dist --exec node dist/server.js",
     "start:prod": "node dist/server.js",
-
     "build:dev": "npm-run-all --parallel build:dev:*",
-    "build:dev:server": "cross-env NODE_ENV=production BABEL_ENV=server webpack --config ./webpack/webpack.server.js",
-    "build:dev:client": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.js",
-
+    "build:dev:server": "cross-env NODE_ENV=development BABEL_ENV=server webpack --config ./webpack/webpack.server.js -w",
+    "build:dev:client": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.prod.js -w",
     "build:prod": "npm-run-all clean build:prod:*",
     "build:prod:server": "cross-env NODE_ENV=production BABEL_ENV=server webpack --config ./webpack/webpack.server.js",
     "build:prod:client": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.js",
-
     "clean": "rimraf dist"
   },
   "repository": {

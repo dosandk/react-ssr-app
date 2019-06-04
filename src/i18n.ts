@@ -29,7 +29,6 @@ i18n
     resources: {
       en, uk
     },
-    // lng: 'uk',
     fallbackLng: 'en', // use en if detected lng is not available
     detection: detectionOptions,
     keySeparator: false, // we do not use keys in form messages.welcome
