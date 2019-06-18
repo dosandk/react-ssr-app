@@ -18,16 +18,13 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json()); // for parsing application/json
-app.use(morgan('dev'));
 
-/*
-  NOTE: Static files will be server by Nginx
-  Uncomment this block if you want to serve static files via express
-*/
-
-app.use(
-  express.static(path.resolve(__dirname, 'public'))
-);
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('dev'));
+  app.use(
+    express.static(path.resolve(__dirname, 'public'))
+  );
+}
 
 app.get('/*', (req, res) => {
   fs.readFile(path.resolve(__dirname, 'index.html'), 'utf8', (err, data) => {
@@ -76,10 +73,13 @@ app.get('/*', (req, res) => {
         `${meta}</head>`
       );
 
+      if (context.status === 404) {
+        return res.status(404).send(result);
+      }
 
-    return res.send(result);
-  })
-});
+      return res.send(result);
+    })
+  });
 
 app.listen(port, error => {
   if (error) {
